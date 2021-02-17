@@ -92,7 +92,7 @@ test('correct filter of todolist should be changed', () => {
     expect(endState[1].filter).toBe(newFilterValue);
 });
 
-test('todolists should be set to the state', () => {
+test('todolists should be set to the Tests', () => {
 
 
     const action = SetTodolistsAC(startState)
