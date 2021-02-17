@@ -3,7 +3,7 @@ import axios from 'axios'
 const settings = {
     withCredentials: true,
     headers: {
-        'API-KEY': 'dbe46ee5-e879-4de9-9a1a-24fa9fda72d1'
+        'API-KEY': '620c76a5-70ac-4020-a6ef-4dc80351880a'
     }
 }
 const instance = axios.create({
@@ -12,7 +12,7 @@ const instance = axios.create({
 })
 
 // api
-export const todolistAPI = {
+export const todolistsAPI = {
     getTodolists() {
         const promise = instance.get<TodolistType[]>('todo-lists');
         return promise;
