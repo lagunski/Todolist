@@ -1,15 +1,15 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import './App.css'
 import {TodolistsList} from '../features/TodolistsList/TodolistsList'
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {AppRootStateType} from "./store";
-import {RequestStatusType} from "./app-reducer";
-import {useSelector} from "react-redux";
+import {initializeAppTC, RequestStatusType} from "./app-reducer";
+import {useDispatch, useSelector} from "react-redux";
 import {BrowserRouter, Route, Redirect, Switch} from "react-router-dom";
 import {Login} from "../features/Login/Login";
 import {
     AppBar,
-    Button,
+    Button, CircularProgress,
     Container,
     IconButton,
     LinearProgress,
@@ -17,6 +17,7 @@ import {
     Typography
 } from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
+import {logoutTC} from "../features/Login/auth-reducer";
 
 type PropsType = {
     demo?: boolean
@@ -24,6 +25,26 @@ type PropsType = {
 
 function App({demo = false}: PropsType) {
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+    const dispatch = useDispatch()
+    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+
+    useEffect(() => {
+        debugger
+        dispatch(initializeAppTC())
+    }, [])
+
+    const logoutHandler = () => {
+        dispatch(logoutTC())
+    }
+
+    if (!isInitialized) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
+    }
+
     return (
         <BrowserRouter>
             <div className="App">
@@ -36,7 +57,8 @@ function App({demo = false}: PropsType) {
                         <Typography variant="h6">
                             News
                         </Typography>
-                        <Button color="inherit">Login</Button>
+
+                        {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Logout</Button>}
                     </Toolbar>
                     {status === 'loading' && <LinearProgress/>}
                 </AppBar>
@@ -45,7 +67,7 @@ function App({demo = false}: PropsType) {
                         <Route exact path={"/"} render={() => <TodolistsList demo={demo}/>}/>
                         <Route path={"/login"} render={() => <Login/>}/>
 
-                        <Route path={'*'} render={() => <h1>404: PAGE NOT FOUND</h1>}/>
+                        <Route path={'/404'} render={() => <h1>404: PAGE NOT FOUND</h1>}/>
                         <Redirect from={'*'} to={'/404'}/>
                     </Switch>
                 </Container>
@@ -53,4 +75,5 @@ function App({demo = false}: PropsType) {
         </BrowserRouter>
     )
 }
+
 export default App

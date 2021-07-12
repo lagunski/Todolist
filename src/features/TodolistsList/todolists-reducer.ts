@@ -1,6 +1,6 @@
 import {Dispatch} from "redux"
 import {todolistsAPI, TodolistType} from "../../api/todolist-api";
-import {RequestStatusType, setAppErrorAC, setAppStatusAC, SetStatusActionType} from "../../app/app-reducer";
+import {RequestStatusType, setAppErrorAC, setAppStatusAC, SetAppStatusActionType} from "../../app/app-reducer";
 
 const initialState: Array<TodolistDomainType> = []
 
@@ -96,7 +96,7 @@ type ActionsType =
     | ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof changeTodolistFilterAC>
     | SetTodolistsActionType
-    | SetStatusActionType
+    | SetAppStatusActionType
     | ReturnType<typeof changeTodolistsEntityStatusAC>
 export type FilterValuesType = 'all' | 'active' | 'completed';
 export type TodolistDomainType = TodolistType & {

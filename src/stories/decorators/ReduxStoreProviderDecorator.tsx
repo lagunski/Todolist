@@ -8,6 +8,7 @@ import {applyMiddleware, combineReducers, createStore} from "redux";
 import {Provider} from "react-redux";
 import {appReducer} from "../../app/app-reducer";
 import thunkMiddleware from "redux-thunk";
+import {authReducer} from "../../features/Login/auth-reducer";
 
 
 
@@ -15,7 +16,8 @@ import thunkMiddleware from "redux-thunk";
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer,
-    app: appReducer
+    app: appReducer,
+    auth: authReducer
 })
 
 const initialGlobalState: AppRootStateType = {
@@ -39,7 +41,11 @@ const initialGlobalState: AppRootStateType = {
     },
     app: {
         error: null,
-        status: "idle"
+        status: "idle",
+        isInitialized: false
+    },
+    auth: {
+      isLoggedIn: false
     }
 };
 

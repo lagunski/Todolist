@@ -1,8 +1,15 @@
 import React from "react"
 import {Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TextField, Button, Grid} from "@material-ui/core"
 import {useFormik} from "formik";
+import {useDispatch, useSelector} from "react-redux";
+import {loginTC} from "./auth-reducer";
+import {AppRootStateType} from "../../app/store";
+import {Redirect} from "react-router-dom";
 
 export const Login = () => {
+
+    const dispatch = useDispatch()
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state=> state.auth.isLoggedIn)
 
     type FormikErrorType = {
         email?: string
@@ -20,20 +27,27 @@ export const Login = () => {
             const errors: FormikErrorType = {};
             if (!values.email) {
                 errors.email = 'Required';
-            } else if (values.email !== 'lagunski@gmail.com') {
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                 errors.email = 'Invalid email address';
             }
             if (!values.password) {
                 errors.password = 'Required'
             } else if (values.password.length <= 2) {
-                errors.password = 'Password should be at least 2 symbols'
+                errors.password = 'Password should be at least 3 symbols'
             }
             return errors;
         },
         onSubmit: values => {
-            alert(JSON.stringify(values))
+            debugger
+            dispatch(loginTC(values))
+            formik.resetForm();
         },
     })
+
+    if (isLoggedIn){
+        return <Redirect to={'/'}/>
+    }
+
 
     return <Grid container justify="center">
         <Grid item xs={4}>
@@ -57,7 +71,7 @@ export const Login = () => {
                             onBlur={formik.handleBlur}
                         />
                         {formik.touched.email && formik.errors.email ?
-                            <div style={{color: 'red'}}>{formik.errors.email}</div> : null }
+                            <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
                         <TextField
                             type="password"
                             label="Password"
