@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {AppRootStateType} from '../../../../Todolist/src/app/store'
+import {RootStateType} from '../../../../Todolist/src/app/store'
 import {
     addTodolistTC,
     changeTodolistFilterAC,
@@ -23,9 +23,9 @@ type PropsType = {
 }
 
 export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
-    const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
-    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state=> state.auth.isLoggedIn)
+    const todolists = useSelector<RootStateType, Array<TodolistDomainType>>(state => state.todolists)
+    const tasks = useSelector<RootStateType, TasksStateType>(state => state.tasks)
+    const isLoggedIn = useSelector<RootStateType, boolean>(state=> state.auth.isLoggedIn)
     const dispatch = useDispatch()
 
 

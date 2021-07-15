@@ -2,7 +2,7 @@ import React from 'react'
 import Snackbar from '@material-ui/core/Snackbar'
 import MuiAlert, {AlertProps} from '@material-ui/lab/Alert'
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../app/store";
+import {RootStateType} from "../../app/store";
 import {setAppErrorAC} from "../../app/app-reducer";
 
 function Alert(props: AlertProps) {
@@ -11,7 +11,7 @@ function Alert(props: AlertProps) {
 
 export function ErrorSnackbar() {
 
-    const error = useSelector<AppRootStateType, string | null>(state => state.app.error)
+    const error = useSelector<RootStateType, string | null>(state => state.app.error)
     const dispatch = useDispatch()
 
     const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
