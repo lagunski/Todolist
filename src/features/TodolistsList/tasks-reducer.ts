@@ -1,4 +1,4 @@
-import {AppRootStateType} from "../../app/store";
+import {RootStateType} from "../../app/store";
 import {
     addTodolistAC,
     removeTodolistAC,
@@ -99,7 +99,7 @@ export const addTaskTC = (title: string, todolistId: string) => (dispatch: Dispa
         })
 }
 export const updateTaskTC = (taskId: string, model: UpdateDomainTaskModelType, todolistId: string) =>
-    (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    (dispatch: Dispatch, getState: () => RootStateType) => {
         const state = getState()
         const task = state.tasks[todolistId].find(t => t.id === taskId)
         if (!task) {

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import './App.css'
 import {TodolistsList} from '../features/TodolistsList/TodolistsList'
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
-import {AppRootStateType} from "./store";
+import {RootStateType} from "./store";
 import {initializeAppTC, RequestStatusType} from "./app-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {BrowserRouter, Route, Redirect, Switch} from "react-router-dom";
@@ -24,10 +24,10 @@ type PropsType = {
 }
 
 function App({demo = false}: PropsType) {
-    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+    const status = useSelector<RootStateType, RequestStatusType>(state => state.app.status)
     const dispatch = useDispatch()
-    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const isInitialized = useSelector<RootStateType, boolean>(state => state.app.isInitialized)
+    const isLoggedIn = useSelector<RootStateType, boolean>(state => state.auth.isLoggedIn)
 
     useEffect(() => {
         debugger
@@ -67,8 +67,8 @@ function App({demo = false}: PropsType) {
                         <Route exact path={"/"} render={() => <TodolistsList demo={demo}/>}/>
                         <Route path={"/login"} render={() => <Login/>}/>
 
-                        <Route path={'/404'} render={() => <h1>404: PAGE NOT FOUND</h1>}/>
-                        <Redirect from={'*'} to={'/404'}/>
+                        {/*<Route path={'/404'} render={() => <h1>404: PAGE NOT FOUND</h1>}/>
+                        <Redirect from={'*'} to={'/404'}/>*/}
                     </Switch>
                 </Container>
             </div>
